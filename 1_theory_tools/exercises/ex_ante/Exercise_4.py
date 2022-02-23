@@ -23,9 +23,17 @@ def solve_consumption_uncertainty(par):
             EV_next = 0
         
             if t<par.T-1:
+                for s in range(par.K):
+                    # weight on the shock 
+                    weight = par.pi[s]
+                    # epsilon shock
+                    eps = par.eps[s]
+                    # expected value
+                    EV_next +=weight*np.interp(w_c+eps,sol.grid_W[:,t+1],sol.V[:,t+1])
                 
-                #Fill in
-                
+                # vectorised
+                #EV_next = np.sum(par.pi * np.interp(w_c+par.eps,sol.grid_W[t+1],sol.V[:,t+1]))
+                      
             V_guess = np.sqrt(c)+par.beta*EV_next
             index = np.argmax(V_guess)
             sol.C[iw,t] = c[index]
