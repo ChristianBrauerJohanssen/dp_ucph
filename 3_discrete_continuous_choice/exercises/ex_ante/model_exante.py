@@ -212,12 +212,12 @@ class model_bufferstock():
 
             if t< par.simT-1:
                 if t+1 > par.Tr: #after pension
-                    sim.m[t+1,:] = par.R*sim.a[t,:]/(par.G*par.L[t])+1
-                    sim.p[t+1,:] = np.log(par.G)+np.log(par.L[t])+sim.p[t,:]
+                    sim.m[t+1,:] = par.R*sim.a[t,:]/(par.G*par.L[t+1])+1
+                    sim.p[t+1,:] = np.log(par.G)+np.log(par.L[t+1])+sim.p[t,:]
                     sim.y[t+1,:] = sim.p[t+1,:]
                 else:       #before pension
-                    sim.m[t+1,:] = par.R*sim.a[t,:]/(par.G*par.L[t]*sim.psi[t+1,:])+sim.xi[t+1,:]
-                    sim.p[t+1,:] = np.log(par.G)+np.log(par.L[t])+sim.p[t,:]+np.log(sim.psi[t+1,:])
+                    sim.m[t+1,:] = par.R*sim.a[t,:]/(par.G*par.L[t+1]*sim.psi[t+1,:])+sim.xi[t+1,:]
+                    sim.p[t+1,:] = np.log(par.G)+np.log(par.L[t+1])+sim.p[t,:]+np.log(sim.psi[t+1,:])
                     sim.y[t+1,:] = sim.p[t+1,:]+np.log(sim.xi[t+1,:])
         
         #Renormalize 
